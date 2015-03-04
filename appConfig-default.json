@@ -1,0 +1,20 @@
+{
+  "schema": "http://example.org/specification/v2.0.0",
+  "metadata": {
+  },
+  "global": {
+    "application.def": ".slider/package/tomcat/slider-tomcat-app-package.zip",
+    "java_home": "/usr/jdk64/jdk1.7.0_67",
+
+    "site.global.xmx_val": "1g",
+    "site.global.xms_val": "128m",
+    "site.global.memory_val": "200M",
+    "site.global.jsvc": "/usr/lib/bigtop-utils/jsvc",
+    "site.global.listen_port": "${TOMCAT.ALLOCATED_PORT}{PER_CONTAINER}"
+  },
+  "components": {
+    "slider-appmaster": {
+      "jvm.heapsize": "128M"
+    }
+  }
+}
