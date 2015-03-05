@@ -33,31 +33,34 @@ class Tomcat(Script):
   def start(self, env):
     import params
     self.configure(env)
-    process_cmd = format('env JAVA_HOME={java64_home} JSVC={jsvc} {app_root}/apache-tomcat-*/bin/daemon.sh --catalina-pid ' + params.pid_file + ' --tomcat-user $USER start')
+    tomcat_pid = format('{app_root}/catalina.pid')
+    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/apache-tomcat-*/bin/catalina.sh start')
 
     Execute(process_cmd,
         logoutput=False,
-        wait_for_finish=False,
-        pid_file=params.pid_file,
-        poll_after = 5
+        wait_for_finish=True,
+        pid_file=tomcat_pid,
+        poll_after = 15
     )
 
   def stop(self, env):
     import params
     self.configure(env)
-    process_cmd = format('env JAVA_HOME={java64_home} JSVC={jsvc} {app_root}/apache-tomcat-*/bin/daemon.sh --catalina-pid ' + params.pid_file + ' --tomcat-user $USER stop')
+    tomcat_pid = format('{app_root}/catalina.pid')
+    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/apache-tomcat-*/bin/catalina.sh stop')
 
     Execute(process_cmd,
-        logoutput=False,
-        wait_for_finish=False,
-        pid_file=params.pid_file,
-        poll_after = 5
+        logoutput=True,
+        wait_for_finish=True,
+        pid_file=tomcat_pid,
+        poll_after = 15
     )
 
   def status(self, env):
     import params
     self.configure(env)
-    check_process_status(params.pid_file)
+    tomcat_pid = format('{app_root}/catalina.pid')
+    check_process_status(tomcat_pid)
 
 if __name__ == "__main__":
   Tomcat().execute()
