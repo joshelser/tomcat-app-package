@@ -29,6 +29,7 @@ class Tomcat(Script):
   def configure(self, env):
     import params
     env.set_params(params)
+    File(format("{conf_dir}/server.xml"), content=Template("server.xml.j2"))
 
   def start(self, env):
     import params

@@ -26,4 +26,6 @@ config = Script.get_config()
 app_root = config['configurations']['global']['app_root']
 java64_home = config['hostLevelParams']['java_home']
 pid_file = config['configurations']['global']['pid_file']
-jsvc = config['configurations']['global']['jsvc']
+
+http_port = config['configurations']['server-xml']['http.port']
+connection_timeout = config['configurations']['server-xml']['connection.timeout']
