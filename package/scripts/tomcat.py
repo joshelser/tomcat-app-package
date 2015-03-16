@@ -33,33 +33,36 @@ class Tomcat(Script):
 
   def start(self, env):
     import params
+    # implicit that the params/env are properly configured
     self.configure(env)
     tomcat_pid = format('{app_root}/catalina.pid')
-    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/apache-tomcat-*/bin/catalina.sh start')
+    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/bin/catalina.sh start')
 
     Execute(process_cmd,
         logoutput=False,
         wait_for_finish=True,
         pid_file=tomcat_pid,
-        poll_after = 15
+        poll_after = 30
     )
 
   def stop(self, env):
     import params
-    self.configure(env)
+    # Don't need to re-call configure()
+    env.set_params(params)
     tomcat_pid = format('{app_root}/catalina.pid')
-    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/apache-tomcat-*/bin/catalina.sh stop')
+    process_cmd = format('env JAVA_HOME={java64_home} CATALINA_PID=' + tomcat_pid + ' {app_root}/bin/catalina.sh stop')
 
     Execute(process_cmd,
         logoutput=True,
         wait_for_finish=True,
         pid_file=tomcat_pid,
-        poll_after = 15
+        poll_after = 30
     )
 
   def status(self, env):
     import params
-    self.configure(env)
+    # Don't need to re-call configure()
+    env.set_params(params)
     tomcat_pid = format('{app_root}/catalina.pid')
     check_process_status(tomcat_pid)
 

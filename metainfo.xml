@@ -10,8 +10,8 @@
         <name>Servers</name>
         <exports>
           <export>
-            <name>host_port</name>
-            <value>${TOMCAT_HOST}:${site.global.listen_port}</value>
+            <name>tomcat.http_port</name>
+            <value>${TOMCAT_HOST}:${site.server-xml.http.port}</value>
           </export>
         </exports>
       </exportGroup>
@@ -45,10 +45,18 @@
           <exports>
             <export>
               <name>HTTP</name>
-              <value>http://${TOMCAT_HOST}:${site.global.listen_port}</value>
+              <value>http://${TOMCAT_HOST}:${site.server-xml.http.port}</value>
             </export>
          </exports>
       </exportGroup>
     </exportGroups>
+
+    <configFiles>
+      <configFile>
+        <type>env</type>
+        <fileName>server.xml</fileName>
+        <dictionaryName>server-xml</dictionaryName>
+      </configFile>
+    </configFiles>
   </application>
 </metainfo>
